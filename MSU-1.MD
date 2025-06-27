@@ -8,7 +8,7 @@ The MSU-1 (Media Streaming Unit, revision 1) is an enhancement chip for the Supe
 
 The MSU-1 is capable of the following:  
 
-- 1 PCM audio playback channel, supports 44100hz 16 bit stereo unsigned PCM audio (some emulators also accept OGG) with a single loop point per track
+- 1 PCM audio playback channel, supports 44.1khz unsigned 16-bit stereo PCM audio (some emulators also accept OGG) with a single loop point per track
 
 - Up to 65,536 tracks can be indexed
 
@@ -111,7 +111,7 @@ Hardware and all emulators support the ``.pcm`` file format.
 
 [MSUPCM++](https://github.com/qwertymodo/msupcmplusplus) can be used to generate ``.pcm`` files in the correct format.
 
-``.pcm`` files are in 44.1khz, 16-bit stereo, uncompressed, unsigned PCM, little endian, left channel first format.
+``.pcm`` files are in 44.1khz, 16-bit stereo uncompressed unsigned PCM files in little-endian order, left channel first.
 
 ``.pcm`` files begin with an 8-byte header. The first 4 bytes are ``MSU1`` in ASCII. The next 4 bytes are a 32-bit unsigned integer that define the loop point in samples. Each sample is 4 bytes.
 
