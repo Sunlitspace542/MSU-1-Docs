@@ -133,7 +133,7 @@ The MSU-1 data file is required for emulators to recognize that the MSU-1 should
 
 ## .msu1 Container Format
 
-This is a ZIP-based container format that at least SNES9x is known to support. It allows for a MSU-1 software to be bundled into a single file. If stored as uncompressed, the ``.msu1`` container can be used to create a patch.
+This is a ZIP-based container format that at least SNES9x is known to support. It allows for MSU-1 software to be bundled into a single file. If stored as uncompressed, the ``.msu1`` container can be used to create a patch.
 
 Its filesystem is as follows:
 
