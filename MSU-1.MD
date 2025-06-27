@@ -4,8 +4,6 @@ This documentation is heavily based upon [Programming the MSU1](https://helmet.k
 
 The SD2SNES/FXPak Pro will be referred to as 'hardware', unless there is a need to be specific.
 
-
-
 # Media Streaming Unit (MSU-1)
 
 The MSU-1 (Media Streaming Unit, revision 1) is an enhancement chip for the Super Nintendo Entertainment System (SNES), designed by Byuu (AKA Near). 
@@ -20,9 +18,7 @@ The MSU-1 is capable of the following:
 
 - Data can be streamed from the data file 1 byte at a time.
 
-
-
-## MSU-1 Register Chart
+# MSU-1 Register Chart
 
 The MSU-1 registers range from ``$2000`` to ``$2007``.  
 
@@ -39,9 +35,7 @@ Their functions change if they are being read from or written to.
 | ``$2006`` | ``MSU_ID5`` - returns 'U'                                      | ``MSU_VOLUME`` - Audio volume                  |
 | ``$2007`` | ``MSU_ID6`` - returns '1'                                      | ``MSU_CONTROL`` - Audio state control          |
 
-
-
-## Register Explanation
+# Register Explanation
 
 ## Reading
 
@@ -70,8 +64,6 @@ Performing a read operation on the data read port will return the next byte of d
 ## `MSU_ID` / `$2002` - `$2007` - Chip Identification
 
 Reading ``$2002`` - `$2007` in order will return the string ``S-MSU1`` in ASCII. This can be used to check if the chip is available and functioning for compatibility checks and the like. Realistically, you only need to read ``$2002``.
-
-
 
 ## Writing
 
@@ -110,8 +102,6 @@ The resume bit was added in revision 2. To use:
 If an audio track is playing and ``MSU_CONTROL`` is written to so that only the repeat bit is set, the current track number and offset into that track is saved.
 
 To resume the saved track, load its track index into ``MSU_TRACK``. The track will be loaded and the MSU-1 will seek to the saved offset.
-
-
 
 # Setup
 
@@ -159,11 +149,7 @@ Its filesystem is as follows:
 
 - Ares requires that the MSU-1 data file be named ``msu1.data.rom``. Ares is supposed to be able to detect the data file by the common name, but as of writing this does not appear to work.
 
-
-
 # Library
-
-
 
 ## Register Defines
 
@@ -211,8 +197,6 @@ audiostate_norepeat    equ    00000001b ; 1
 audiostate_repeat    equ    00000011b ; 3
 audiostate_resume    equ    00000100b ; 4
 ```
-
-
 
 ## Example Code
 
@@ -267,9 +251,7 @@ NoMSU
     bmi .databusyloop
 ```
 
-
-
-## See Also
+# See Also
 
 - [Programming the MSU1](https://helmet.kafuka.org/msu1.htm) - The page this document was heavily based upon. It's quite outdated (13 years old as of writing) and only covers revision 1 of the chip, but a good amount of the information within is still relevant.
 
