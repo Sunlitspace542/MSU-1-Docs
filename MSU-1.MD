@@ -205,7 +205,7 @@ Below are some basic assembly routines dealing with the MSU-1:
 ```asm
 CheckForMSU
     a8    ; Set A to 8-bit mode if necessary
-    lda MSU_ID
+    lda MSU_ID    ; Reading only the first byte is sufficient
     cmp #$53    ; 'S'
     bne NoMSU    ; Stop checking if it's wrong
 MSUFound
@@ -220,7 +220,7 @@ NoMSU
 
 ```asm
     a8i16    ; A 8-bit, X/Y 16-bit
-    stz MSU_VOLUME    ;Stop chip to prevent any buzzing on hardware
+    stz MSU_VOLUME    ; Stop chip to prevent any buzzing on hardware
     stz MSU_CONTROL
     ldx #$0001    ; Writing a 16-bit value will automatically
     stx MSU_TRACK    ; set $2005 as well, so this is easy.
