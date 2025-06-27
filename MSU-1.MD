@@ -4,7 +4,7 @@ This documentation is heavily based upon [Programming the MSU1](https://helmet.k
 
 The SD2SNES/FXPak Pro will be referred to as 'hardware', unless there is a need to be specific.
 
-# Media Streaming Unit (MSU-1)
+# The Media Streaming Unit (MSU-1)
 
 The MSU-1 (Media Streaming Unit, revision 1) is an enhancement chip for the Super Nintendo Entertainment System (SNES), designed by Byuu (AKA Near). 
 
@@ -253,6 +253,6 @@ NoMSU
 
 # See Also
 
-- [Programming the MSU1](https://helmet.kafuka.org/msu1.htm) - The page this document was heavily based upon. It's quite outdated (13 years old as of writing) and only covers revision 1 of the chip, but a good amount of the information within is still relevant.
+- [Programming the MSU1](https://helmet.kafuka.org/msu1.htm) by Kawa - The page this document was heavily based upon. It's quite outdated (13 years old as of writing) and only covers revision 1 of the chip, but a good amount of the information within is still relevant.
 
-- [SNES-MSU-1-Driver](https://github.com/Sunlitspace542/SNES-MSU-1-Driver/tree/main) - MSU-1 Driver written by Sunlit. Lots of example code in here.
+- [SNES-MSU-1-Driver](https://github.com/Sunlitspace542/SNES-MSU-1-Driver/tree/main) by Sunlit - Lots of example code in here.
