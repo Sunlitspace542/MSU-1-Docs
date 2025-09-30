@@ -93,13 +93,15 @@ Writing to this address only has an effect if the Audio busy bit is clear.
 
 If the play bit is not set, the MSU-1 audio is paused.
 
+**IMPORTANT:** The S-DSP flag register mute bit ($6C bit 6) must be cleared so that the expansion audio signal from the cartridge slot is mixed into the audio output. If the mute bit is set, MSU-1 audio will be completely silenced.
+
 The repeat bit allows for the currently playing track to loop to the loop point set in its PCM file once the end of the track has been reached.
 
 The resume bit was added in revision 2. To use:
 
-If an audio track is playing and ``MSU_CONTROL`` is written to so that only the repeat bit is set, the current track number and offset into that track is saved.
+If an audio track is playing and ``MSU_CONTROL`` is written to so that only the repeat bit is set, the current track number and offset into the current track is saved.
 
-To resume the saved track, load its track index into ``MSU_TRACK``. The track will be loaded and the MSU-1 will seek to the saved offset.
+To resume the saved track, load its track index into ``MSU_TRACK``. The track will be loaded and the MSU-1 will seek to the saved offset. The control bits can then be set to play or repeat.
 
 # Setup
 
