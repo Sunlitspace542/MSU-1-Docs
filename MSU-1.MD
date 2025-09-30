@@ -99,7 +99,7 @@ The repeat bit allows for the currently playing track to loop to the loop point 
 
 The resume bit was added in revision 2. To use:
 
-If an audio track is playing and ``MSU_CONTROL`` is written to so that only the repeat bit is set, the current track number and offset into the current track is saved.
+If an audio track is playing and ``MSU_CONTROL`` is written to so that only the resume bit is set, the current track number and offset into the current track is saved.
 
 To resume the saved track, load its track index into ``MSU_TRACK``. The track will be loaded and the MSU-1 will seek to the saved offset. The control bits can then be set to play or repeat.
 
