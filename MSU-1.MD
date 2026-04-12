@@ -4,7 +4,9 @@
 
 Note: *The SD2SNES/FXPak Pro will be referred to as 'hardware', unless there is a need to be specific.*
 
-The MSU-1 (Media Streaming Unit, revision 1) is an enhancement chip for the Super Nintendo Entertainment System (SNES), designed by Byuu (AKA Near). 
+The MSU-1 (Media Streaming Unit, revision 1) is an enhancement chip for the Super Nintendo Entertainment System (SNES) / Super Famicom (SFC), designed by Byuu (AKA Near).  
+
+It is essentially a recreation of what the Super Disc (SNES CD-ROM addon) was probably supposed to be, with some enhancements due to its use of solid-state storage (SD card) instead of optical media.  
 
 The MSU-1 is capable of the following:  
 
