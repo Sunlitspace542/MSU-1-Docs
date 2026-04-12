@@ -117,6 +117,8 @@ Hardware and all emulators support the ``.pcm`` file format.
 
 [MSUPCM++](https://github.com/qwertymodo/msupcmplusplus) can be used to generate ``.pcm`` files in the correct format.
 
+For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foobar2000 plugin) can be used (supports looping).
+
 ``.pcm`` files are in 44.1khz, 16-bit stereo uncompressed signed PCM files in little-endian order, left channel first.
 
 ``.pcm`` files begin with an 8-byte header. The first 4 bytes are ``MSU1`` in ASCII. The next 4 bytes are a 32-bit unsigned integer that define the loop point in samples. Each sample is 4 bytes.
@@ -266,6 +268,10 @@ NoMSU
 - [SNES-MSU-1-Driver](https://github.com/Sunlitspace542/SNES-MSU-1-Driver/tree/main) by Sunlit - Lots of example code in here.
 
 # Notes
+
+## Audio Mixing
+
+The S-DSP flag register mute bit (``$6C`` bit 6) must be cleared so that the expansion audio signal from the cartridge port is mixed into the audio output. If the mute bit is set, MSU-1 audio will be completely silenced.
 
 ## Concerning Hardware
 
