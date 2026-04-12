@@ -13,10 +13,8 @@ The MSU-1 is capable of the following:
 - 1 PCM audio playback channel
 	- 44.1khz signed 16-bit stereo PCM audio (this is essentially the same as CD "Red Book" audio, some emulators also accept OGG)
 	- single loop point per track (gapless looping)
-
-- Up to 65,536 audio tracks can be indexed
-
-- Single track playback resume (supported from revision 2 onwards)
+	- Up to 65,536 audio tracks can be indexed
+	- Single track playback resume (supported from revision 2 onwards)
 
 - 4GB of general-purpose **read-only** data storage via a secondary data file
 	- Data can be streamed from the data file 1 byte at a time (see ``MSU_READ``).
