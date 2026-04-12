@@ -8,13 +8,17 @@ The MSU-1 (Media Streaming Unit, revision 1) is an enhancement chip for the Supe
 
 The MSU-1 is capable of the following:  
 
-- 1 PCM audio playback channel, supports 44.1khz unsigned 16-bit stereo PCM audio (some emulators also accept OGG) with a single loop point per track
+- 1 PCM audio playback channel
+	- 44.1khz signed 16-bit stereo PCM audio (this is essentially the same as CD "Red Book" audio, some emulators also accept OGG)
+	- single loop point per track (gapless looping)
 
 - Up to 65,536 tracks can be indexed
 
-- 4GB of general-purpose **read-only** data storage via a secondary data file
+- Single track playback resume (supported from revision 2 onwards)
 
-- Data can be streamed from the data file 1 byte at a time.
+- 4GB of general-purpose **read-only** data storage via a secondary data file
+	- Data can be streamed from the data file 1 byte at a time (see ``MSU_READ``).
+	- Max data transfer rate of 3.58MB/sec (per Qwertymodo specs PDF).
 
 # MSU-1 Register Chart
 
@@ -22,16 +26,16 @@ The MSU-1 registers range from ``$2000`` to ``$2007``.
 
 Their functions change if they are being read from or written to.  
 
-| Address   | Reading                                                        | Writing                                        |
-| --------- | -------------------------------------------------------------- | ---------------------------------------------- |
-| ``$2000`` | ``MSU_STATUS`` - Chip status port                              | ``MSU_SEEK`` - 32-bit Data seek port (4 bytes) |
-| ``$2001`` | ``MSU_READ`` - 8-bit data read port                            | ``MSU_SEEK2``                                  |
-| ``$2002`` | ``MSU_ID`` - Chip identification string (6 bytes); returns 'S' | ``MSU_SEEK3``                                  |
-| ``$2003`` | ``MSU_ID2`` - returns '-'                                      | ``MSU_SEEK4``                                  |
-| ``$2004`` | ``MSU_ID3`` - returns 'M'                                      | ``MSU_TRACK`` - Audio track index (2 bytes)    |
-| ``$2005`` | ``MSU_ID4`` - returns 'S'                                      | ``MSU_TRACK2``                                 |
-| ``$2006`` | ``MSU_ID5`` - returns 'U'                                      | ``MSU_VOLUME`` - Audio volume                  |
-| ``$2007`` | ``MSU_ID6`` - returns '1'                                      | ``MSU_CONTROL`` - Audio state control          |
+| Address   | Reading                                                        | Writing                                           |
+| --------- | -------------------------------------------------------------- | ------------------------------------------------- |
+| ``$2000`` | ``MSU_STATUS`` - Chip status/revision port                     | ``MSU_SEEK`` - 32-bit Data seek port (4 bytes LE) |
+| ``$2001`` | ``MSU_READ`` - 8-bit data read port                            | ``MSU_SEEK2``                                     |
+| ``$2002`` | ``MSU_ID`` - Chip identification string (6 bytes); returns 'S' | ``MSU_SEEK3``                                     |
+| ``$2003`` | ``MSU_ID2`` - returns '-'                                      | ``MSU_SEEK4``                                     |
+| ``$2004`` | ``MSU_ID3`` - returns 'M'                                      | ``MSU_TRACK`` - Audio track index (2 bytes LE)    |
+| ``$2005`` | ``MSU_ID4`` - returns 'S'                                      | ``MSU_TRACK2``                                    |
+| ``$2006`` | ``MSU_ID5`` - returns 'U'                                      | ``MSU_VOLUME`` - Audio volume                     |
+| ``$2007`` | ``MSU_ID6`` - returns '1'                                      | ``MSU_CONTROL`` - Audio state control             |
 
 # Register Explanation
 
@@ -45,7 +49,7 @@ This register is a bitfield indicating the current chip status.
 | --------- | ---------- | ------------ | ------------- | ------------- | -------- | -------- | -------- |
 | Data busy | Audio busy | Audio repeat | Audio playing | Track missing | Revision | Revision | Revision |
 
-**Data/Audio busy** - these bits indicate when the MSU-1 is busy reading audio/data.
+**Data/Audio busy** - these bits indicate when the MSU-1 is busy reading audio/data. (Should be) set when data is being read, and cleared when finished (see below).
 
 **Please note** that no emulators are known to correctly emulate this functionality. 
 
@@ -53,7 +57,7 @@ This register is a bitfield indicating the current chip status.
 
 **Track missing** - If the MSU-1 cannot find the track at the set index, this bit will be set. This bit can be used to handle playback errors.
 
-**Revision bits** - Reports the chip's revision. Will likely return 2 if that particular emulator's standard is up to date. The only difference between revision 1 and revision 2 is audio resume support. Some emulators may report a revision of 1 and still support this feature. The emulators BSNES and SNES9x and the SD2SNES/FXPak Pro flashcarts are known to report the correct revision of 2.
+**Revision bits** - Reports the chip's revision. Will likely return 2 (010b) if the target platform's (emulator/hardware) implementation of standard is up to date. The only difference between revision 1 and revision 2 is audio resume support. Some emulators may report a revision of 1 (001b) and still support this feature. The emulators BSNES and SNES9x and the SD2SNES/FXPak Pro flashcarts are known to report the correct revision of 2.
 
 ## `MSU_READ` / `$2001` - Data Read Port
 
@@ -61,7 +65,7 @@ Performing a read operation on the data read port will return the next byte of d
 
 ## `MSU_ID` / `$2002` - `$2007` - Chip Identification
 
-Reading ``$2002`` - `$2007` in order will return the string ``S-MSU1`` in ASCII. This can be used to check if the chip is available and functioning for compatibility checks and the like. Realistically, you only need to read ``$2002``.
+Reading ``$2002`` - `$2007` in order will return the string ``S-MSU1`` in ASCII. This can be used to check if the chip is available and functioning for compatibility checks and the like. Reading and testing the contents of only ``$2002`` should be sufficient.
 
 ## Writing
 
@@ -93,7 +97,7 @@ Writing to this address only has an effect if the Audio busy bit is clear.
 
 If the play bit is not set, the MSU-1 audio is paused.
 
-**IMPORTANT:** The S-DSP flag register mute bit ($6C bit 6) must be cleared so that the expansion audio signal from the cartridge slot is mixed into the audio output. If the mute bit is set, MSU-1 audio will be completely silenced.
+**IMPORTANT:** The S-DSP flag register mute bit (``$6C`` bit 6) must be cleared so that the expansion audio signal from the cartridge port is mixed into the audio output. If the mute bit is set, MSU-1 audio will be completely silenced.
 
 The repeat bit allows for the currently playing track to loop to the loop point set in its PCM file once the end of the track has been reached.
 
@@ -113,7 +117,7 @@ Hardware and all emulators support the ``.pcm`` file format.
 
 [MSUPCM++](https://github.com/qwertymodo/msupcmplusplus) can be used to generate ``.pcm`` files in the correct format.
 
-``.pcm`` files are in 44.1khz, 16-bit stereo uncompressed unsigned PCM files in little-endian order, left channel first.
+``.pcm`` files are in 44.1khz, 16-bit stereo uncompressed signed PCM files in little-endian order, left channel first.
 
 ``.pcm`` files begin with an 8-byte header. The first 4 bytes are ``MSU1`` in ASCII. The next 4 bytes are a 32-bit unsigned integer that define the loop point in samples. Each sample is 4 bytes.
 
@@ -255,4 +259,16 @@ NoMSU
 
 - [Programming the MSU1](https://helmet.kafuka.org/msu1.htm) by Kawa - The page this document was heavily based upon. It's quite outdated (13 years old as of writing) and only covers revision 1 of the chip, but a good amount of the information within is still relevant.
 
+- [MSU-1 Abridged Specs](https://zumi.neocities.org/stuff/msu1_notes/) by Zumi - Similar information to what is in this document is included here. Also included is [example code for Game Boy software to interface with the MSU-1 via the SD2SNES/FXPak Pro Super Game Boy mode.](https://zumi.neocities.org/stuff/msu1_notes/sgb_msu1_bootstrap.txt)
+
+- [MSU-1 Specs PDF](https://github.com/Sunlitspace542/MSU-1-Docs/tree/main/qwertymodo%20specs%20pdf/MSU-1.pdf) by Qwertymodo - The only "official" documentation found as of writing. Unfinished, but does contain some useful information. Included here for archival purposes.
+
 - [SNES-MSU-1-Driver](https://github.com/Sunlitspace542/SNES-MSU-1-Driver/tree/main) by Sunlit - Lots of example code in here.
+
+# Notes
+
+## Concerning Hardware
+
+Per the MSU-1 specs PDF by Qwertymodo, page 13:  
+> Rapid writes to ``MSU_CONTROL`` and ``MSU_TRACK`` may not be processed in the order they were received. After writing ``$04`` to ``MSU_CONTROL`` to set the RESUME flag, ensure that the PLAY flag (bit 4) in ``MSU_STATUS`` is clear before trying to write a new track number to ``MSU_TRACK``.
+  
