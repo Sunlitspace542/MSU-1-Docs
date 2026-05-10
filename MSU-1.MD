@@ -278,3 +278,5 @@ The S-DSP flag register mute bit (``$6C`` bit 6) must be cleared so that the exp
 Per the MSU-1 specs PDF by Qwertymodo, page 13:  
 > Rapid writes to ``MSU_CONTROL`` and ``MSU_TRACK`` may not be processed in the order they were received. After writing ``$04`` to ``MSU_CONTROL`` to set the RESUME flag, ensure that the PLAY flag (bit 4) in ``MSU_STATUS`` is clear before trying to write a new track number to ``MSU_TRACK``.
   
+When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue where a buzzing sound can be heard while a track is loading. This can be fixed by zeroing `MSU_VOLUME` before loading a new track, and restoring the proper volume afterwards. This is demonstrated in the track loading example code.
+  
