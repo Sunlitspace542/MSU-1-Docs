@@ -8,3 +8,6 @@ The included documentation is heavily based upon [Programming the MSU1](https://
 Source files from several emulators were also referenced along with the [MSU-1 Abridged Specs](https://zumi.neocities.org/stuff/msu1_notes/) by Zumi and [MSU-1 Specs PDF](https://github.com/Sunlitspace542/MSU-1-Docs/tree/main/qwertymodo%20specs%20pdf/MSU-1.pdf) by Qwertymodo.  
 
 See [MSU-1.MD](./MSU-1.MD) for the documentation.
+
+# Licensing
+Only the `MSU-1.MD` file in this repo is licensed under the MIT license.
