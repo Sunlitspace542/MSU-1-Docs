@@ -119,7 +119,7 @@ Hardware and all emulators support the ``.pcm`` file format.
 
 For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foobar2000 plugin) can be used (supports looping).
 
-``.pcm`` files are 44.1khz uncompressed signed 16-bit stereo PCM files in little-endian order, left channel first.
+``.pcm`` files are uncompressed 44.1khz signed 16-bit stereo PCM files in little-endian order, left channel first.
 
 ``.pcm`` files begin with an 8-byte header. The first 4 bytes are ``MSU1`` in ASCII. The next 4 bytes are a 32-bit unsigned integer that define the loop point in samples. Each sample is 4 bytes.
 
