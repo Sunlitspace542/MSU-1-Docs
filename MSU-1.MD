@@ -257,16 +257,6 @@ NoMSU
     bmi .databusyloop
 ```
 
-# See Also
-
-- [Programming the MSU1](https://helmet.kafuka.org/msu1.htm) by Kawa - The page this document was heavily based upon. It's quite outdated (13 years old as of writing) and only covers revision 1 of the chip, but a good amount of the information within is still relevant.
-
-- [MSU-1 Abridged Specs](https://zumi.neocities.org/stuff/msu1_notes/) by Zumi - Similar information to what is in this document is included here. Also included is [example code for Game Boy software to interface with the MSU-1 via the SD2SNES/FXPak Pro Super Game Boy mode.](https://zumi.neocities.org/stuff/msu1_notes/sgb_msu1_bootstrap.txt)
-
-- [MSU-1 Specs PDF](https://github.com/Sunlitspace542/MSU-1-Docs/tree/main/qwertymodo%20specs%20pdf/MSU-1.pdf) by Qwertymodo - The only "official" documentation found as of writing. Unfinished, but does contain some useful information. Included here for archival purposes.
-
-- [SNES-MSU-1-Driver](https://github.com/Sunlitspace542/SNES-MSU-1-Driver/tree/main) by Sunlit - Lots of example code in here.
-
 # Notes/Errata
 
 ## Audio Mixing
@@ -279,4 +269,14 @@ Per the MSU-1 specs PDF by Qwertymodo, page 13:
 > Rapid writes to ``MSU_CONTROL`` and ``MSU_TRACK`` may not be processed in the order they were received. After writing ``$04`` to ``MSU_CONTROL`` to set the RESUME flag, ensure that the PLAY flag (bit 4) in ``MSU_STATUS`` is clear before trying to write a new track number to ``MSU_TRACK``.
   
 When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue where a buzzing sound can be heard while a track is loading. This can be fixed by zeroing `MSU_VOLUME` before loading a new track, and restoring the proper volume afterwards. This is demonstrated in the track playback example code. This has been fixed in [SD2SNES/FXPak Pro firmware update 1.11.1 (2026-05-13)](sd2snes.de/blog/archives/1336).
+  
+# See Also
+
+- [Programming the MSU1](https://helmet.kafuka.org/msu1.htm) by Kawa - The page this document was heavily based upon. It's quite outdated (13 years old as of writing) and only covers revision 1 of the chip, but a good amount of the information within is still relevant.
+
+- [MSU-1 Abridged Specs](https://zumi.neocities.org/stuff/msu1_notes/) by Zumi - Similar information to what is in this document is included here. Also included is [example code for Game Boy software to interface with the MSU-1 via the SD2SNES/FXPak Pro Super Game Boy mode.](https://zumi.neocities.org/stuff/msu1_notes/sgb_msu1_bootstrap.txt)
+
+- [MSU-1 Specs PDF](https://github.com/Sunlitspace542/MSU-1-Docs/tree/main/qwertymodo%20specs%20pdf/MSU-1.pdf) by Qwertymodo - The only "official" documentation found as of writing. Unfinished, but does contain some useful information. Included here for archival purposes.
+
+- [SNES-MSU-1-Driver](https://github.com/Sunlitspace542/SNES-MSU-1-Driver/tree/main) by Sunlit - Lots of example code in here.
   
