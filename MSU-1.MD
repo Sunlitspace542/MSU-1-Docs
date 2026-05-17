@@ -296,7 +296,7 @@ Ares is supposed to be able to detect the MSU-1 data file by the common file nam
 
 - [Initial specification proposed by Byuu/Near and implemented in bsnes v057.](https://forums.nesdev.org/viewtopic.php?t=5784)
 - Registers range from `$21F0-$21F7`.
-- Data port is 64 bits wide.
+- Data port is 48 bits wide.
 - Data file is named `21fx.bin`.
 - Audio tracks are in `.wav` format with a base file name of `audioXXXXX.wav`, where `XXXXX` is the track index from 0 - 65535.
 - Version bitfield (`$21F0` bits 0-3) set to 0 (0000b).
