@@ -65,7 +65,7 @@ Performing a read operation on the data read port will return the next byte of d
 
 ## `MSU_ID` / `$2002` - `$2007` - Chip Identification
 
-Reading ``$2002`` - `$2007` in order will return the string ``S-MSU1`` in ASCII. This can be used to check if the chip is available and functioning for compatibility checks and the like. Reading and testing the contents of only ``$2002`` should be sufficient.
+Reading ``$2002`` - ``$2007`` in order will return the string ``S-MSU1`` in ASCII. This can be used to check if the chip is available and functioning for compatibility checks and the like. Reading and testing the contents of only ``$2002`` should be sufficient.
 
 ## Writing
 
@@ -107,8 +107,38 @@ If an audio track is playing and ``MSU_CONTROL`` is written to so that only the 
 
 To resume the saved track, load its track index into ``MSU_TRACK``. The track will be loaded and the MSU-1 will seek to the saved offset. The control bits can then be set to play or repeat.
 
-# Setup
+# File Formats and Setup
 
+## Common File Structure and Naming Scheme
+
+Hardware and most emulators recognize this common file structure:
+
+- ``[NAME].sfc`` for the program ROM,
+
+- ``[NAME].msu`` for the MSU-1 data file, and
+
+- ``[NAME]-#.pcm`` for each audio track 0-65535 (if any). OGG can be used instead if the target emulator supports it.
+
+## .msu1 Container Format
+
+This is a ZIP-based container format that at least SNES9x is known to support. It allows for MSU-1 software to be bundled into a single file. If stored as uncompressed, the ``.msu1`` container can be used to create a patch.
+
+Its filesystem is as follows:
+
+- ``program.rom`` - The program ROM
+
+- ``data.msu`` - The MSU-1 data file
+
+- ``track-#.(pcm/ogg)`` - Each audio track 0-65535 (if any). OGG can be used instead of ``.pcm``.
+
+## MSU-1 Data File
+
+The existence of the MSU-1 data file is required to indicate that the MSU-1 should be used.
+
+The data file can be a maximum of 4GB in size and data can be read from any arbitrary address in the file.
+
+If no data is needed, the data file can be left empty or filled with some placeholder data. 
+  
 ## Audio Track Formats
 
 ## MSU-1 .pcm Format
@@ -126,34 +156,6 @@ For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foob
 ## OGG
 
 Some emulators also support the OGG format for encoding audio tracks as a space saving measure. a ``LOOPSTART`` comment in each track's OGG file is supported that defines the loop point in samples.
-
-## Common Naming Scheme
-
-Hardware and most emulators accept this common file structure:
-
-- ``[NAME].sfc`` for the program ROM,
-
-- ``[NAME].msu`` for the MSU-1 data file, and
-
-- ``[NAME]-#.pcm`` for each audio track 0-65535 (if any). OGG can be used instead if the target emulator supports it.
-
-The MSU-1 data file is required for emulators to recognize that the MSU-1 should be used. If no data is needed, the data file can be left empty or filled with some placeholder data.
-
-## .msu1 Container Format
-
-This is a ZIP-based container format that at least SNES9x is known to support. It allows for MSU-1 software to be bundled into a single file. If stored as uncompressed, the ``.msu1`` container can be used to create a patch.
-
-Its filesystem is as follows:
-
-- ``program.rom`` - The program ROM
-
-- ``data.msu`` - The MSU-1 data file
-
-- ``track-#.(pcm/ogg)`` - Each audio track 0-65535 (if any). OGG can be used instead of ``.pcm``.
-
-## Miscellaneous File Format Notes
-
-- Ares requires that the MSU-1 data file be named ``msu1.data.rom``. Ares is supposed to be able to detect the data file by the common name, but as of writing this does not appear to work.
 
 # Library
 
@@ -270,6 +272,10 @@ Per the MSU-1 specs PDF by Qwertymodo, page 13:
   
 When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue where a buzzing sound can be heard while a track is loading. This can be fixed by zeroing `MSU_VOLUME` before loading a new track, and restoring the proper volume afterwards. This is demonstrated in the track playback example code. This has been fixed in [SD2SNES/FXPak Pro firmware update 1.11.1 (2026-05-13)](sd2snes.de/blog/archives/1336).
   
+## Emulator Behavior
+
+Ares is supposed to be able to detect the MSU-1 data file by the common file name of `[NAME].msu` and by the alternative file name of `msu1.data.rom`. However, detection of the common file name does not work as of writing. A workaround is to rename the data file to the alternative file name of `msu1.data.rom`.
+  
 # See Also
 
 - [Programming the MSU1](https://helmet.kafuka.org/msu1.htm) by Kawa - The page this document was heavily based upon. It's quite outdated (13 years old as of writing) and only covers revision 1 of the chip, but a good amount of the information within is still relevant.
@@ -279,4 +285,67 @@ When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue wher
 - [MSU-1 Specs PDF](https://github.com/Sunlitspace542/MSU-1-Docs/tree/main/qwertymodo%20specs%20pdf/MSU-1.pdf) by Qwertymodo - The only "official" documentation found as of writing. Unfinished, but does contain some useful information. Included here for archival purposes.
 
 - [SNES-MSU-1-Driver](https://github.com/Sunlitspace542/SNES-MSU-1-Driver/tree/main) by Sunlit - Lots of example code in here.
+
+***
+
+# MSU-1 Revision History
+
+## "21fx" (2009)
+
+- [Initial specification proposed by Byuu/Near and implemented in bsnes v057.](https://forums.nesdev.org/viewtopic.php?t=5784)
+- Registers range from `$21F0-$21F7`.
+- Data port is 64 bits wide.
+- Data file is named `21fx.bin`.
+- Audio tracks are in `.wav` format with a base file name of `audioXXXXX.wav`, where `XXXXX` is the track index from 0 - 65535.
+- Version bitfield (`$21F0` bits 0-3) set to 0 (0000b).
+
+### 21fx Registers
+
+| Address   | Reading                                                              | Writing                       |
+| --------- | -------------------------------------------------------------------- | ----------------------------- |
+| ``$21F0`` | Chip status port                                                     | Chip command port (see table) |
+| ``$21F1`` | 8-bit data read port - Fetches byte and increments data port address | Increments data port address  |
+| ``$21F2`` | Parameter Port byte 0 - Returns current data port address            | See table                     |
+| ``$21F3`` | Parameter Port byte 1 - No function                                  | See table                     |
+| ``$21F4`` | Parameter Port byte 2 - No function                                  | See table                     |
+| ``$21F5`` | Parameter Port byte 3 - No function                                  | See table                     |
+| ``$21F6`` | Parameter Port byte 4 - No function                                  | See table                     |
+| ``$21F7`` | Parameter Port byte 5 - No function                                  | See table                     |
+
+### Bits Returned upon `$21F0` Read
+
+| 7          | 6           | 5             | 4            | 3       | 2       | 1       | 0       |
+| ---------- | ----------- | ------------- | ------------ | ------- | ------- | ------- | ------- |
+| Data ready | Audio ready | Audio playing | Audio paused | Version | Version | Version | Version |
+
+### `$21F0` Commands
+
+| Write | Effect                                                                                         |
+| ----- | ---------------------------------------------------------------------------------------------- |
+| `00`  | Set data port address. (parameter port bytes 0-5 = data offset)                                |
+| `01`  | Set audio track index. (parameter port bytes 0-1 = track index; also serves as a stop command) |
+| `02`  | Set volume. (parameter port byte 0 = left volume, parameter port byte 1 = right volume)        |
+| `03`  | Play / pause current track.                                                                    |
+Note that a slightly earlier version of the 21fx specification swaps the functions of commands `02` and `03`.
+
+## Early Revision 1 (2010)
+
+- Implemented in bsnes v060.
+- Registers now begin at `$2000`. Registers and their functions are now in their final arrangement.
+- Data port is now 32 bits wide.
+- Data file naming scheme changed to `[name].msu`.
+- Audio track naming scheme is now `[name]-#.wav`.
+- Revision bitfield in `MSU_STATUS` changed to 1 (001b).
+
+## Revision 1 (2012)
+
+- Initial release.
+- Added gapless looping feature.
+- `.pcm` file format created, replacing `.wav` as the audio track format.
+
+## Revision 2 (2015)
+
+- Added audio resume feature.
+- Added audio resume flag bit to `MSU_CONTROL` register.
+- Revision bitfield in `MSU_STATUS` changed to 2 (010b).
   
