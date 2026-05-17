@@ -308,11 +308,11 @@ Ares is supposed to be able to detect the MSU-1 data file by the common file nam
 | ``$21F0`` | Chip status port                                                     | Chip command port (see table) |
 | ``$21F1`` | 8-bit data read port - Fetches byte and increments data port address | Increments data port address  |
 | ``$21F2`` | Parameter Port byte 0 - Returns current data port address            | See table                     |
-| ``$21F3`` | Parameter Port byte 1 - No function                                  | See table                     |
-| ``$21F4`` | Parameter Port byte 2 - No function                                  | See table                     |
-| ``$21F5`` | Parameter Port byte 3 - No function                                  | See table                     |
-| ``$21F6`` | Parameter Port byte 4 - No function                                  | See table                     |
-| ``$21F7`` | Parameter Port byte 5 - No function                                  | See table                     |
+| ``$21F3`` | Parameter Port byte 1 - Returns current data port address            | See table                     |
+| ``$21F4`` | Parameter Port byte 2 - Returns current data port address            | See table                     |
+| ``$21F5`` | Parameter Port byte 3 - Returns current data port address            | See table                     |
+| ``$21F6`` | Parameter Port byte 4 - Returns current data port address            | See table                     |
+| ``$21F7`` | Parameter Port byte 5 - Returns current data port address            | See table                     |
 
 ### Bits Returned upon `$21F0` Read
 
