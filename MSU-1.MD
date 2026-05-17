@@ -57,7 +57,7 @@ This register is a bitfield indicating the current chip status.
 
 **Track missing** - If the MSU-1 cannot find the track at the set index, this bit will be set. This bit can be used to handle playback errors.
 
-**Revision bits** - Reports the chip's revision. Will likely return 2 (010b) if the target platform's (emulator/hardware) implementation of standard is up to date. The only difference between revision 1 and revision 2 is audio resume support. Some emulators may report a revision of 1 (001b) and still support this feature. The emulators BSNES and SNES9x and the SD2SNES/FXPak Pro flashcarts are known to report the correct revision of 2.
+**Revision bits** - Reports the chip's revision. Will likely return 2 (010b) if the target platform's (emulator/hardware) implementation of standard is up to date. The only difference between revision 1 and revision 2 is audio resume support. It is possible that some emulators report a revision of 1 (001b) and still support this feature. The bsnes and SNES9x emulators and the SD2SNES/FXPak Pro flashcarts are known to report the correct revision of 2.
 
 ## `MSU_READ` / `$2001` - Data Read Port
 
@@ -265,7 +265,7 @@ NoMSU
 
 The S-DSP flag register mute bit (``$6C`` bit 6) must be cleared so that the expansion audio signal from the cartridge port is mixed into the audio output. If the mute bit is set, MSU-1 audio will be completely silenced.
 
-## Behavior on Hardware
+## Hardware Behavior
 
 Per the MSU-1 specs PDF by Qwertymodo, page 13:  
 > Rapid writes to ``MSU_CONTROL`` and ``MSU_TRACK`` may not be processed in the order they were received. After writing ``$04`` to ``MSU_CONTROL`` to set the RESUME flag, ensure that the PLAY flag (bit 4) in ``MSU_STATUS`` is clear before trying to write a new track number to ``MSU_TRACK``.
@@ -273,6 +273,8 @@ Per the MSU-1 specs PDF by Qwertymodo, page 13:
 When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue where a buzzing sound can be heard while a track is loading. This can be fixed by zeroing `MSU_VOLUME` before loading a new track, and restoring the proper volume afterwards. This is demonstrated in the track playback example code. This has been fixed in [SD2SNES/FXPak Pro firmware update 1.11.1 (2026-05-13)](sd2snes.de/blog/archives/1336).
   
 ## Emulator Behavior
+
+No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These flags are never updated and are always cleared. Remember that on hardware, the audio busy flag must be clear to change the audio track, and the data busy flag must be clear to read out data.
 
 Ares is supposed to be able to detect the MSU-1 data file by the common file name of `[NAME].msu` and by the alternative file name of `msu1.data.rom`. However, detection of the common file name does not work as of writing. A workaround is to rename the data file to the alternative file name of `msu1.data.rom`.
   
