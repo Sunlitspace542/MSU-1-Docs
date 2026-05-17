@@ -326,6 +326,7 @@ Ares is supposed to be able to detect the MSU-1 data file by the common file nam
 | `01`  | Set audio track index. (parameter port bytes 0-1 = track index; also serves as a stop command) |
 | `02`  | Set volume. (parameter port byte 0 = left volume, parameter port byte 1 = right volume)        |
 | `03`  | Play / pause current track.                                                                    |
+
 Note that a slightly earlier version of the 21fx specification swaps the functions of commands `02` and `03`.
 
 ## Early Revision 1 (2010)
