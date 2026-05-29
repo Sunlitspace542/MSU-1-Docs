@@ -107,9 +107,11 @@ If an audio track is playing and ``MSU_CONTROL`` is written to so that only the 
 
 To resume the saved track, load its track index into ``MSU_TRACK``. The track will be loaded and the MSU-1 will seek to the saved offset. The control bits can then be set to play or repeat.
 
-# File Formats and Setup
+# Setup
 
-## Common File Structure and Naming Scheme
+## File Structure
+
+### Common File Structure and Naming Scheme
 
 Hardware and most emulators recognize this common file structure:
 
@@ -119,7 +121,7 @@ Hardware and most emulators recognize this common file structure:
 
 - ``[NAME]-#.pcm`` for each audio track 0-65535 (if any). OGG can be used instead if the target emulator supports it.
 
-## Higan File Structure and Naming Scheme
+### Higan File Structure and Naming Scheme
 
 Higan uses a special file hierarchy. This has been tested and working in Higan v110.
 in `Systems/Super Famicom/Super Famicom Cartridge/[game name]/`:
@@ -130,6 +132,24 @@ msu1/
 	data.rom - MSU-1 data file
 	track-#.pcm - Each audio track 0-655535 (if any).
 ```
+
+# Emulator-Specific File Formats
+## bsnes `manifest.bml` MSU-1 Section Format
+
+Some MSU-1 packs include a `manifest.bml` for bsnes. The MSU-1 section is laid out something like this, usually following the cartridge/board's memory map:
+```
+  msu1
+    map id=io address=00-3f,80-bf:2000-2007
+    rom name=[MSU-1 data file name] size=[size of MSU-1 data file in hex, prefixed with 0x]
+    track number=0 name=[track 0 file name]
+    track number=1 name=[track 1 file name]
+    track number=2 name=[track 2 file name]
+    [so on and so forth for each track...]
+```
+If file names contain spaces, they are to be wrapped in quotes, e.g. `name="my file name.bin"`.
+A `manifest.bml` does not seem to be necessary with modern bsnes, assuming file names follow the common file structure described previously, and the program ROM's header information is correct.
+
+# Container Formats
 
 ## .msu1 Container Format
 
@@ -145,6 +165,8 @@ Its filesystem is as follows:
 
 - ``track-#.(pcm/ogg)`` - Each audio track 0-65535 (if any). OGG can be used instead of ``.pcm``.
 
+# MSU-1 File Formats
+
 ## MSU-1 Data File
 
 The existence of the MSU-1 data file is required to indicate that the MSU-1 should be used.
@@ -153,9 +175,9 @@ The data file can be a maximum of 4GB in size and data can be read from any arbi
 
 If no data is needed, the data file can be left empty or filled with some placeholder data. 
   
-## Audio Track Formats
+## MSU-1 Audio Track Formats
 
-## MSU-1 .pcm Format
+## MSU-1 `.pcm` Format
 
 Hardware and all emulators support the ``.pcm`` file format.
 
@@ -167,24 +189,9 @@ For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foob
 
 ``.pcm`` files begin with an 8-byte header. The first 4 bytes are ``MSU1`` in ASCII. The next 4 bytes are a 32-bit unsigned integer that define the loop point in samples. Each sample is 4 bytes.
 
-## OGG
+## `.ogg`
 
-Some emulators also support the OGG format for encoding audio tracks as a space saving measure. a ``LOOPSTART`` comment in each track's OGG file is supported that defines the loop point in samples.
-
-## bsnes `manifest.bml` MSU-1 Section Format
-
-Some MSU-1 packs include a `manifest.bml` for bsnes. The MSU-1 section is laid out something like this, usually following the cartridge/board's memory map:
-```
-  msu1
-    map id=io address=00-3f,80-bf:2000-2007
-    rom name=[MSU-1 data file name] size=[size of MSU-1 data file in hex, prefixed with 0x]
-    track number=0 name=[track 0 file name]
-    track number=1 name=[track 1 file name]
-    track number=2 name=[track 2 file name]
-    [so on and so forth for each track...]
-```
-If file names contain spaces, they are to be wrapped in quotes, e.g. `name="my file name.bin"`.
-A `manifest.bml` does not seem to be necessary with modern bsnes, assuming file names follow the common file structure described previously, and the program ROM's header information is correct.
+Some emulators (e.g. SNES9x) also support the OGG format for encoding audio tracks as a space saving measure. a ``LOOPSTART`` comment in each track's OGG file is supported that defines the loop point in samples.
 
 # Library
 
