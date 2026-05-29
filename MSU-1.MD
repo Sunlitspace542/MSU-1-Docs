@@ -334,7 +334,7 @@ When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue wher
 
 ## Emulator Behavior
 
-### Audio/Data busy flag behavior
+### Audio/Data Busy Flag Behavior
 
 No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These flags are never updated and are always cleared. To function correctly on hardware, the audio busy flag must be clear before changing the audio track, and the data busy flag must be clear before reading out data. If the corresponding busy flag bits are not clear, the audio track will not change and data will not be read.
 
