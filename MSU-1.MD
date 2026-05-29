@@ -338,7 +338,7 @@ When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue wher
 
 No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These flags are never updated and are always cleared. Remember that on hardware, the audio busy flag must be clear to change the audio track, and the data busy flag must be clear to read out data.
 
-Ares is supposed to be able to detect the MSU-1 data file by the common file name of `[NAME].msu` and by the alternative file name of `msu1.data.rom`. However, detection of the common file name does not work as of writing. A workaround is to rename the data file to the alternative file name of `msu1.data.rom`.
+Ares is supposed to be able to detect the MSU-1 data file by the common file name of `[NAME].msu` and by the alternative file name of `msu1.data.rom`. However, detection of the common file name does not work as of writing. A workaround is to rename the data file to the alternative file name of `msu1.data.rom` (This appears to have been fixed, tested the latest nightly build as of writing).
   
 # See Also
 
