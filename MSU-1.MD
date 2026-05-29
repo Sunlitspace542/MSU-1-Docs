@@ -20,6 +20,21 @@ The MSU-1 is capable of the following:
 	- Data can be streamed from the data file 1 byte at a time (see ``MSU_READ``).
 	- Max data transfer rate of 3.58MB/sec (per Qwertymodo specs PDF).
 
+Contents of this document:
+
+0. [Intro](#the-media-streaming-unit-msu-1) - You are here
+1. [MSU-1 Register Chart](#msu-1-register-chart) - Chart of all registers.
+2. [Register Explanation](#register-explanation) - Explanation of all registers.
+3. [MSU-1 Setup and Usage](#msu-1-setup-and-usage) - Usage of MSU-1 software with hardware and emulators.
+	[File Structure](#file-structure) - Basic file structure expected for MSU-1 software.
+	[MSU-1 File Formats](#msu-1-file-formats) - Standard file formats used by the MSU-1.
+	[Emulator-Specific File Formats](#emulator-specific-file-formats) - File formats relating to MSU-1 that some emulators use.
+	[Container Formats](#container-formats) - Container formats that combine all MSU-1 data into a single file.
+4. [MSU-1 Code Library](#msu-1-code-library) - Example code for interfacing with the MSU-1.
+5. [Notes/Errata](#noteserrata) - Fixes for common programming mistakes and chip bugs.
+6. [See Also](#see-also)
+7. [MSU-1 Revision History](#msu-1-revision-history)
+
 ***
 
 # MSU-1 Register Chart
@@ -139,6 +154,34 @@ msu1/
 	track-#.pcm - Each audio track 0-655535 (if any).
 ```
 
+# MSU-1 File Formats
+
+## MSU-1 Data File
+
+The existence of the MSU-1 data file is required to indicate that the MSU-1 should be used.
+
+The data file can be a maximum of 4GB in size and data can be read from any arbitrary address in the file.
+
+If no data is needed, the data file can be left empty or filled with some placeholder data. 
+  
+## MSU-1 Audio Track Formats
+
+## MSU-1 `.pcm` Format
+
+Hardware and all emulators support the ``.pcm`` file format.
+
+[MSUPCM++](https://github.com/qwertymodo/msupcmplusplus) can be used to generate ``.pcm`` files in the correct format.
+
+For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foobar2000 plugin) can be used (supports looping).
+
+``.pcm`` files are uncompressed 44.1khz signed 16-bit stereo PCM files in little-endian order, left channel first.
+
+``.pcm`` files begin with an 8-byte header. The first 4 bytes are ``MSU1`` in ASCII. The next 4 bytes are a 32-bit unsigned integer that define the loop point in samples. Each sample is 4 bytes.
+
+## `.ogg`
+
+Some emulators (e.g. SNES9x) also support the OGG format for encoding audio tracks as a space saving measure. a ``LOOPSTART`` comment in each track's OGG file is supported that defines the loop point in samples.
+
 # Emulator-Specific File Formats
 ## bsnes `manifest.bml` MSU-1 Section Format
 
@@ -170,34 +213,6 @@ Its filesystem is as follows:
 - ``data.msu`` - The MSU-1 data file
 
 - ``track-#.(pcm/ogg)`` - Each audio track 0-65535 (if any). OGG can be used instead of ``.pcm``.
-
-# MSU-1 File Formats
-
-## MSU-1 Data File
-
-The existence of the MSU-1 data file is required to indicate that the MSU-1 should be used.
-
-The data file can be a maximum of 4GB in size and data can be read from any arbitrary address in the file.
-
-If no data is needed, the data file can be left empty or filled with some placeholder data. 
-  
-## MSU-1 Audio Track Formats
-
-## MSU-1 `.pcm` Format
-
-Hardware and all emulators support the ``.pcm`` file format.
-
-[MSUPCM++](https://github.com/qwertymodo/msupcmplusplus) can be used to generate ``.pcm`` files in the correct format.
-
-For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foobar2000 plugin) can be used (supports looping).
-
-``.pcm`` files are uncompressed 44.1khz signed 16-bit stereo PCM files in little-endian order, left channel first.
-
-``.pcm`` files begin with an 8-byte header. The first 4 bytes are ``MSU1`` in ASCII. The next 4 bytes are a 32-bit unsigned integer that define the loop point in samples. Each sample is 4 bytes.
-
-## `.ogg`
-
-Some emulators (e.g. SNES9x) also support the OGG format for encoding audio tracks as a space saving measure. a ``LOOPSTART`` comment in each track's OGG file is supported that defines the loop point in samples.
 
 ***
 
