@@ -26,10 +26,10 @@ Contents of this document:
 1. [MSU-1 Register Chart](#msu-1-register-chart) - Chart of all registers.
 2. [Register Explanation](#register-explanation) - Explanation of all registers.
 3. [MSU-1 Setup and Usage](#msu-1-setup-and-usage) - Usage of MSU-1 software with hardware and emulators.
-	[File Structure](#file-structure) - Basic file structure expected for MSU-1 software.
-	[MSU-1 File Formats](#msu-1-file-formats) - Standard file formats used by the MSU-1.
-	[Emulator-Specific File Formats](#emulator-specific-file-formats) - File formats relating to MSU-1 that some emulators use.
-	[Container Formats](#container-formats) - Container formats that combine all MSU-1 data into a single file.
+	- [File Structure](#file-structure) - Basic file structure expected for MSU-1 software.
+	- [MSU-1 File Formats](#msu-1-file-formats) - Standard file formats used by the MSU-1.
+	- [Emulator-Specific File Formats](#emulator-specific-file-formats) - File formats relating to MSU-1 that some emulators use.
+	- [Container Formats](#container-formats) - Container formats that combine all MSU-1 data into a single file.
 4. [MSU-1 Code Library](#msu-1-code-library) - Example code for interfacing with the MSU-1.
 5. [Notes/Errata](#noteserrata) - Fixes for common programming mistakes and chip bugs.
 6. [See Also](#see-also)
