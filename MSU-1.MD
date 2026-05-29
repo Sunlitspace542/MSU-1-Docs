@@ -76,7 +76,7 @@ This register is a bitfield indicating the current chip status.
 
 ## `MSU_READ` / `$2001` - Data Read Port
 
-Performing a read operation on the data read port will return the next byte of data and automatically increment the seek port address by 1. Will do nothing if the data busy bit in the status port is set.
+Performing a read operation on the data read port will return the next byte of data and automatically increment the seek port address by 1. Reading this register has no effect if the data busy bit in the status port is set.
 
 ## `MSU_ID` / `$2002` - `$2007` - Chip Identification
 
@@ -92,7 +92,7 @@ Writing to ``$2003`` will trigger the seek, setting the Data busy bit until comp
 
 ## ``MSU_TRACK`` / ``$2004`` - ``$2005`` - Audio Track Index
 
-These two registers form one 16-bit index, with ``$2004`` being the least significant byte. Writing to ``$2005`` stops the current track and triggers the track change, setting the Audio busy bit until completed.
+These two registers form one 16-bit index, with ``$2004`` being the least significant byte. Writing to ``$2005`` stops the current track and triggers the track change, setting the Audio busy bit until completed. Writes have no effect if the audio busy bit in the status port is set.
 
 Tracks can be indexed from 0 to 65535.
 
