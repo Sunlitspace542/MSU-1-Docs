@@ -209,7 +209,7 @@ Either `.pcm` or `.ogg` format audio tracks can be used (unless using Higan, whe
 
 Mercurial Magic ([source](https://github.com/qwertymodo/Mercurial-Magic), [Zeldix thread with download link](https://www.zeldix.net/t1477-mercurial-magic)) can unpack this file into a format usable with the Higan emulator.
 
-According to Mercurial Magic documentation, no `.msu1` package can exceed 4GB in size, and no individual file's uncompressed size can exceed 4GB.
+According to [Mercurial Magic documentation](https://github.com/qwertymodo/Mercurial-Magic/blob/master/README.txt), no `.msu1` package can exceed 4GB in size, and no individual file's uncompressed size can exceed 4GB.
 
 Its filesystem is as follows:
 
