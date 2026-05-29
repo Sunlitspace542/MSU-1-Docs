@@ -90,6 +90,8 @@ These four registers combine to one 32-bit address into the data file, with ``$2
 
 Writing to ``$2003`` will trigger the seek, setting the Data busy bit until completed.
 
+Writes have no effect if the data busy bit in the status port is set.
+
 ## ``MSU_TRACK`` / ``$2004`` - ``$2005`` - Audio Track Index
 
 These two registers form one 16-bit index, with ``$2004`` being the least significant byte. Writing to ``$2005`` stops the current track and triggers the track change, setting the Audio busy bit until completed. Writes have no effect if the audio busy bit in the status port is set.
