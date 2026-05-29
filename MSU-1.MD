@@ -154,9 +154,9 @@ msu1/
 	track-#.pcm - Each audio track 0-655535 (if any).
 ```
 
-# MSU-1 File Formats
+## MSU-1 File Formats
 
-## MSU-1 Data File
+### MSU-1 Data File
 
 The existence of the MSU-1 data file is required to indicate that the MSU-1 should be used.
 
@@ -166,7 +166,7 @@ If no data is needed, the data file can be left empty or filled with some placeh
   
 ## MSU-1 Audio Track Formats
 
-## MSU-1 `.pcm` Format
+### MSU-1 `.pcm` Format
 
 Hardware and all emulators support the ``.pcm`` file format.
 
@@ -178,12 +178,12 @@ For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foob
 
 ``.pcm`` files begin with an 8-byte header. The first 4 bytes are ``MSU1`` in ASCII. The next 4 bytes are a 32-bit unsigned integer that define the loop point in samples. Each sample is 4 bytes.
 
-## `.ogg`
+### `.ogg`
 
 Some emulators (e.g. SNES9x) also support the OGG format for encoding audio tracks as a space saving measure. a ``LOOPSTART`` comment in each track's OGG file is supported that defines the loop point in samples.
 
-# Emulator-Specific File Formats
-## bsnes `manifest.bml` MSU-1 Section Format
+## Emulator-Specific File Formats
+### bsnes `manifest.bml` MSU-1 Section Format
 
 Some MSU-1 packs include a `manifest.bml` for bsnes. The MSU-1 section is laid out something like this, usually following the cartridge/board's memory map:
 ```
@@ -198,9 +198,9 @@ Some MSU-1 packs include a `manifest.bml` for bsnes. The MSU-1 section is laid o
 If file names contain spaces, they are to be wrapped in quotes, e.g. `name="my file name.bin"`.
 A `manifest.bml` does not seem to be necessary with modern bsnes, assuming file names follow the common file structure described previously, and the program ROM's header information is correct.
 
-# Container Formats
+## Container Formats
 
-## .msu1 Container Format
+### .msu1 Container Format
 
 This is a ZIP-based container format that at least SNES9x is known to support. It allows for MSU-1 software to be bundled into a single file. If stored as uncompressed, the ``.msu1`` container can be used to create a patch.
 
