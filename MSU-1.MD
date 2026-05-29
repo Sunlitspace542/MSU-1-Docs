@@ -20,7 +20,7 @@ The MSU-1 is capable of the following:
 	- Data can be streamed from the data file 1 byte at a time (see ``MSU_READ``).
 	- Max data transfer rate of 3.58MB/sec (per Qwertymodo specs PDF).
 
-Contents of this document:
+## Table of Contents
 
 0. [Intro](#the-media-streaming-unit-msu-1) - You are here
 1. [MSU-1 Register Chart](#msu-1-register-chart) - Chart of all registers and their functions.
