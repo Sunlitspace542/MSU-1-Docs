@@ -193,7 +193,7 @@ For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foob
 
 Some emulators (e.g. SNES9x) also support the OGG format for encoding audio tracks as a space saving measure. a ``LOOPSTART`` comment in each track's OGG file is supported that defines the loop point in samples.
 
-# Library
+# Code Library
 
 ## Register Defines
 
