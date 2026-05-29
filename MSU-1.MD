@@ -145,7 +145,8 @@ Hardware and most emulators recognize this common file structure:
 ### Higan File Structure and Naming Scheme
 
 Higan uses a special file hierarchy. This has been tested and working in Higan v110.
-in `Systems/Super Famicom/Super Famicom Cartridge/[game name]/`:
+
+In `Systems/Super Famicom/Super Famicom Cartridge/[game name]/`:
 ```
 manifest.bml - Not required(?), Higan's ROM importer will generate one of these for you if needed
 program.rom - program ROM
