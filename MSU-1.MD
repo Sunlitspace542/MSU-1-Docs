@@ -317,20 +317,28 @@ NoMSU
 
 # Notes/Errata
 
-## S-DSP Audio Mixing
+## Cartridge Audio Mixing
 
 The S-DSP flag register mute bit (``$6C`` bit 6) must be cleared so that the expansion audio signal from the cartridge port is mixed into the audio output. If the mute bit is set, MSU-1 audio will be completely silenced.
 
 ## Hardware Behavior
 
+### Command Priority
+
 Per the MSU-1 specs PDF by Qwertymodo, page 13:  
 > Rapid writes to ``MSU_CONTROL`` and ``MSU_TRACK`` may not be processed in the order they were received. After writing ``$04`` to ``MSU_CONTROL`` to set the RESUME flag, ensure that the PLAY flag (bit 4) in ``MSU_STATUS`` is clear before trying to write a new track number to ``MSU_TRACK``.
-  
+
+### Audio Noise During Track Change on SD2SNES/FXPak Pro
+
 When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue where a buzzing sound can be heard while a track is loading. This can be fixed by zeroing `MSU_VOLUME` before loading a new track, and restoring the proper volume afterwards. This is demonstrated in the track playback example code. This has been fixed in [SD2SNES/FXPak Pro firmware update 1.11.1 (2026-05-13)](https://sd2snes.de/blog/archives/1336).
-  
+
 ## Emulator Behavior
 
+### Audio/Data busy flag behavior
+
 No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These flags are never updated and are always cleared. To function correctly on hardware, the audio busy flag must be clear before changing the audio track, and the data busy flag must be clear before reading out data. If the corresponding busy flag bits are not clear, the audio track will not change and data will not be read.
+
+### Ares MSU-1 Detection
 
 Ares is supposed to be able to detect the MSU-1 data file by the common file name of `[NAME].msu` and by the alternative file name of `msu1.data.rom`. However, detection of the common file name does not work as of Ares v147. A workaround is to rename the data file to the alternative file name of `msu1.data.rom` This appears to have been fixed in the latest nightly build as of writing.
   
