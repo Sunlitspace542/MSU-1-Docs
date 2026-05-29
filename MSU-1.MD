@@ -119,6 +119,18 @@ Hardware and most emulators recognize this common file structure:
 
 - ``[NAME]-#.pcm`` for each audio track 0-65535 (if any). OGG can be used instead if the target emulator supports it.
 
+## Higan File Structure and Naming Scheme
+
+Higan uses a special file hierarchy. This has been tested and working in Higan v110.
+in `Systems/Super Famicom/Super Famicom Cartridge/[game name]/`:
+```
+manifest.bml - Not required(?), Higan's ROM importer will generate one of these for you if needed
+program.rom - program ROM
+msu1/
+	data.rom - MSU-1 data file
+	track-#.pcm - Each audio track 0-655535 (if any).
+```
+
 ## .msu1 Container Format
 
 This is a ZIP-based container format that at least SNES9x is known to support. It allows for MSU-1 software to be bundled into a single file. If stored as uncompressed, the ``.msu1`` container can be used to create a patch.
