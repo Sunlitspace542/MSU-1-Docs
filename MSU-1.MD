@@ -130,11 +130,11 @@ To resume the saved track, load its track index into ``MSU_TRACK``. The track wi
 
 Hardware and most emulators recognize this common file structure:
 
-- ``[NAME].sfc`` for the program ROM,
-
-- ``[NAME].msu`` for the MSU-1 data file, and
-
-- ``[NAME]-#.pcm`` for each audio track 0-65535 (if any). OGG can be used instead if the target emulator supports it.
+```
+[NAME].sfc - Program ROM
+[NAME].msu - MSU-1 data file
+[NAME]-#.pcm - Each audio track 0-65535 (if any). OGG can be used instead if the target emulator supports it.
+```
 
 These files are typically contained within a folder with the name of the game they correspond to.
 
@@ -175,7 +175,7 @@ For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foob
 
 ``.pcm`` files begin with an 8-byte header. The first 4 bytes are ``MSU1`` in ASCII. The next 4 bytes are a 32-bit unsigned integer that define the loop point in samples. Each sample is 4 bytes.
 
-### `.ogg`
+### MSU-1 Tagged `.ogg` Format
 
 Some emulators (e.g. SNES9x) also support the OGG format for encoding audio tracks as a space saving measure. a ``LOOPSTART`` comment in each track's OGG file is supported that defines the loop point in samples.
 
@@ -199,17 +199,23 @@ A `manifest.bml` does not seem to be necessary with modern bsnes, assuming file 
 
 ### `.msu1` Container Format
 
-This is a ZIP-based container format that at least SNES9x is known to support. It allows for MSU-1 software to be bundled into a single file. If stored as uncompressed, the ``.msu1`` container can be used to create a patch.
+This is a ZIP-based container format that at least SNES9x is known to support. It allows for MSU-1 software to be bundled into a single file.
 
-Mercurial Magic ([source](https://github.com/qwertymodo/Mercurial-Magic), [Zeldix thread with download link](https://www.zeldix.net/t1477-mercurial-magic)) can unpack this file into a format usable with the Higan emulator (Higan supports only .pcm format audio tracks). 
+Only Store (0x00) and Deflate (0x08) compression methods are allowed to be used.
+
+If compressed with Store (uncompressed), the ``.msu1`` container can be used to create a patch.
+
+Either `.pcm` or `.ogg` format audio tracks can be used (unless using Higan, where only `.pcm` can be used).
+
+Mercurial Magic ([source](https://github.com/qwertymodo/Mercurial-Magic), [Zeldix thread with download link](https://www.zeldix.net/t1477-mercurial-magic)) can unpack this file into a format usable with the Higan emulator.
 
 Its filesystem is as follows:
 
-- ``program.rom`` - The program ROM
-
-- ``data.msu`` - The MSU-1 data file
-
-- ``track-#.(pcm/ogg)`` - Each audio track 0-65535 (if any). OGG can be used instead of ``.pcm``.
+```
+program.rom - The program ROM
+data.msu (or msu1.rom) - The MSU-1 data file
+track-#.pcm (or track-#.ogg) - Each audio track 0-65535 (if any).
+```
 
 ***
 
