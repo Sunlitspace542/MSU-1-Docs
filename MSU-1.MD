@@ -136,6 +136,8 @@ Hardware and most emulators recognize this common file structure:
 
 - ``[NAME]-#.pcm`` for each audio track 0-65535 (if any). OGG can be used instead if the target emulator supports it.
 
+These files are typically contained within a folder with the name of the game they correspond to.
+
 ### Higan File Structure and Naming Scheme
 
 Higan uses a special file hierarchy. This has been tested and working in Higan v110.
