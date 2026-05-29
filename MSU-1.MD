@@ -205,7 +205,7 @@ A `manifest.bml` does not seem to be necessary with modern bsnes, assuming file 
 
 This is a ZIP-based container format that at least SNES9x is known to support. It allows for MSU-1 software to be bundled into a single file. If stored as uncompressed, the ``.msu1`` container can be used to create a patch.
 
-Mercurial Magic ([source](https://github.com/qwertymodo/Mercurial-Magic), [zeldix thread with download link](www.zeldix.net/t1477-mercurial-magic)) can unpack this file into a format usable with the Higan emulator (.pcm format audio tracks only). 
+Mercurial Magic ([source](https://github.com/qwertymodo/Mercurial-Magic), [Zeldix thread with download link](https://www.zeldix.net/t1477-mercurial-magic)) can unpack this file into a format usable with the Higan emulator (.pcm format audio tracks only). 
 
 Its filesystem is as follows:
 
