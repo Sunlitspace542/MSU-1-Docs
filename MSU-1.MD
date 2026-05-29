@@ -157,6 +157,21 @@ For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foob
 
 Some emulators also support the OGG format for encoding audio tracks as a space saving measure. a ``LOOPSTART`` comment in each track's OGG file is supported that defines the loop point in samples.
 
+## bsnes `manifest.bml` MSU-1 Section Format
+
+Some MSU-1 packs include a `manifest.bml` for bsnes. The MSU-1 section is laid out something like this, usually following the cartridge/board's memory map:
+```
+  msu1
+    map id=io address=00-3f,80-bf:2000-2007
+    rom name=[MSU-1 data file name] size=[size of MSU-1 data file in hex, prefixed with 0x]
+    track number=0 name=[track 0 file name]
+    track number=1 name=[track 1 file name]
+    track number=2 name=[track 2 file name]
+    [so on and so forth for each track...]
+```
+If file names contain spaces, they are to be wrapped in quotes, e.g. `name="my file name.bin"`.
+A `manifest.bml` does not seem to be necessary with modern bsnes, assuming file names follow the common file structure described previously, and the program ROM's header information is correct.
+
 # Library
 
 ## Register Defines
