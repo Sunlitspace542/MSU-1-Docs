@@ -11,13 +11,13 @@ It is essentially a recreation of what the Super Disc (SNES CD-ROM addon) was pr
 The MSU-1 is capable of the following:  
 
 - 1 PCM audio playback channel
-	- 44.1khz signed 16-bit stereo PCM audio (this is essentially the same as CD "Red Book" audio, some emulators also accept OGG)
+	- 44.1khz signed 16-bit stereo PCM audio (similar to CDDA/"Red Book" audio, some emulators also accept OGG)
 	- single loop point per track (gapless looping)
 	- Up to 65,536 audio tracks can be indexed
 	- Single track playback resume (supported from revision 2 onwards)
 
 - 4GB of general-purpose **read-only** data storage via a secondary data file
-	- Data can be streamed from the data file 1 byte at a time (see ``MSU_READ``).
+	- Data can be streamed from the data file 1 byte at a time.
 	- Max data transfer rate of 3.58MB/sec (per Qwertymodo specs PDF).
 
 ## Table of Contents
@@ -68,11 +68,7 @@ This register is a bitfield indicating the current chip status.
 | --------- | ---------- | ------------ | ------------- | ------------- | -------- | -------- | -------- |
 | Data busy | Audio busy | Audio repeat | Audio playing | Track missing | Revision | Revision | Revision |
 
-**Data/Audio busy** - these bits indicate when the MSU-1 is busy reading audio/data. (Should be) set when data is being read, and cleared when finished (see below).
-
-**Please note** that no emulators are known to correctly emulate this functionality. 
-
-**However**, on hardware, you must wait for the Audio busy bit to clear before changing the current audio track, and for the Data busy bit to clear before reading out data. If you do not implement such checks, the MSU-1 will fail to stream any audio or data. It is strongly recommended you implement such checks regardless of your target platform.
+**Data busy/Audio busy** - these bits indicate when the MSU-1 is busy reading audio/data. Should be set when audio/data is being read, and cleared when finished, but not always (see [Emulator Behavior](#emulator-behavior))
 
 **Track missing** - If the MSU-1 cannot find the track at the set index, this bit will be set. This bit can be used to handle playback errors.
 
@@ -114,9 +110,7 @@ This register is a bitfield that controls the audio playback state.
 
 Writing to this address only has an effect if the Audio busy bit is clear.
 
-If the play bit is not set, the MSU-1 audio is paused.
-
-**IMPORTANT:** The S-DSP flag register mute bit (``$6C`` bit 6) must be cleared so that the expansion audio signal from the cartridge port is mixed into the audio output. If the mute bit is set, MSU-1 audio will be completely silenced.
+If the play bit is not set, MSU-1 audio is paused.
 
 The repeat bit allows for the currently playing track to loop to the loop point set in its PCM file once the end of the track has been reached.
 
@@ -201,7 +195,7 @@ A `manifest.bml` does not seem to be necessary with modern bsnes, assuming file 
 
 ## Container Formats
 
-### .msu1 Container Format
+### `.msu1` Container Format
 
 This is a ZIP-based container format that at least SNES9x is known to support. It allows for MSU-1 software to be bundled into a single file. If stored as uncompressed, the ``.msu1`` container can be used to create a patch.
 
@@ -323,7 +317,7 @@ NoMSU
 
 # Notes/Errata
 
-## Audio Mixing
+## S-DSP Audio Mixing
 
 The S-DSP flag register mute bit (``$6C`` bit 6) must be cleared so that the expansion audio signal from the cartridge port is mixed into the audio output. If the mute bit is set, MSU-1 audio will be completely silenced.
 
@@ -336,7 +330,7 @@ When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue wher
   
 ## Emulator Behavior
 
-No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These flags are never updated and are always cleared. Remember that on hardware, the audio busy flag must be clear to change the audio track, and the data busy flag must be clear to read out data.
+No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These flags are never updated and are always cleared. To function correctly on hardware, the audio busy flag must be clear to change the audio track, and the data busy flag must be clear to read out data.
 
 Ares is supposed to be able to detect the MSU-1 data file by the common file name of `[NAME].msu` and by the alternative file name of `msu1.data.rom`. However, detection of the common file name does not work as of Ares v147. A workaround is to rename the data file to the alternative file name of `msu1.data.rom` This appears to have been fixed in the latest nightly build as of writing.
   
