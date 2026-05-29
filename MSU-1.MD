@@ -68,7 +68,7 @@ This register is a bitfield indicating the current chip status.
 | --------- | ---------- | ------------ | ------------- | ------------- | -------- | -------- | -------- |
 | Data busy | Audio busy | Audio repeat | Audio playing | Track missing | Revision | Revision | Revision |
 
-**Data busy/Audio busy** - these bits indicate when the MSU-1 is busy reading audio/data. Should be set when audio/data is being read, and cleared when finished, but not always (see [Emulator Behavior](#emulator-behavior))
+**Data busy/Audio busy** - these bits indicate when the MSU-1 is busy reading audio/data. Should be set when audio/data is being read, and cleared when finished, but not always (see [Emulator Behavior](#emulator-behavior)). Data busy must be clear to read out data, and audio busy must be clear to change audio tracks. If the corresponding busy flags are set, the audio track will not change and data will not be read.
 
 **Track missing** - If the MSU-1 cannot find the track at the set index, this bit will be set. This bit can be used to handle playback errors.
 
@@ -346,7 +346,7 @@ When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue wher
 
 ### Audio/Data Busy Flag Behavior
 
-No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These flags are never updated and are always cleared. To function correctly on hardware, the audio busy flag must be clear before changing the audio track, and the data busy flag must be clear before reading out data. If the corresponding busy flag bits are not clear, the audio track will not change and data will not be read.
+No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These flags are never updated and are always cleared. To function correctly on hardware, the audio busy flag must be clear before changing the audio track, and the data busy flag must be clear before reading out data. If the corresponding busy flags are set, the audio track will not change and data will not be read.
 
 ### Ares MSU-1 Detection
 
