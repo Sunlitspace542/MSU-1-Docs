@@ -20,6 +20,8 @@ The MSU-1 is capable of the following:
 	- Data can be streamed from the data file 1 byte at a time (see ``MSU_READ``).
 	- Max data transfer rate of 3.58MB/sec (per Qwertymodo specs PDF).
 
+***
+
 # MSU-1 Register Chart
 
 The MSU-1 registers range from ``$2000`` to ``$2007``.  
@@ -36,6 +38,8 @@ Their functions change if they are being read from or written to.
 | ``$2005`` | ``MSU_ID4`` - returns 'S'                                      | ``MSU_TRACK2``                                    |
 | ``$2006`` | ``MSU_ID5`` - returns 'U'                                      | ``MSU_VOLUME`` - Audio volume                     |
 | ``$2007`` | ``MSU_ID6`` - returns '1'                                      | ``MSU_CONTROL`` - Audio state control             |
+
+***
 
 # Register Explanation
 
@@ -107,7 +111,9 @@ If an audio track is playing and ``MSU_CONTROL`` is written to so that only the 
 
 To resume the saved track, load its track index into ``MSU_TRACK``. The track will be loaded and the MSU-1 will seek to the saved offset. The control bits can then be set to play or repeat.
 
-# Setup
+***
+
+# MSU-1 Setup and Usage
 
 ## File Structure
 
@@ -193,7 +199,9 @@ For playback, [foo_input_msu](https://github.com/qwertymodo/foo_input_msu) (Foob
 
 Some emulators (e.g. SNES9x) also support the OGG format for encoding audio tracks as a space saving measure. a ``LOOPSTART`` comment in each track's OGG file is supported that defines the loop point in samples.
 
-# Code Library
+***
+
+# MSU-1 Code Library
 
 ## Register Defines
 
@@ -294,6 +302,8 @@ NoMSU
     bit MSU_STATUS    ; Wait for the Data Busy bit to clear.
     bmi .databusyloop
 ```
+
+***
 
 # Notes/Errata
 
