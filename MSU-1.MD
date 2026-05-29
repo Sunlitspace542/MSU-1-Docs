@@ -23,8 +23,8 @@ The MSU-1 is capable of the following:
 Contents of this document:
 
 0. [Intro](#the-media-streaming-unit-msu-1) - You are here
-1. [MSU-1 Register Chart](#msu-1-register-chart) - Chart of all registers.
-2. [Register Explanation](#register-explanation) - Explanation of all registers.
+1. [MSU-1 Register Chart](#msu-1-register-chart) - Chart of all registers and their functions.
+2. [Register Explanation](#register-explanation) - Explanation of all registers' functions when read from and written to.
 3. [MSU-1 Setup and Usage](#msu-1-setup-and-usage) - Usage of MSU-1 software with hardware and emulators.
 	- [File Structure](#file-structure) - Basic file structure expected for MSU-1 software.
 	- [MSU-1 File Formats](#msu-1-file-formats) - Standard file formats used by the MSU-1.
