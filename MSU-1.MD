@@ -352,7 +352,7 @@ No emulator is known to correctly emulate the audio/data busy status bits in `MS
 
 ### Ares MSU-1 Detection
 
-Ares is supposed to be able to detect the MSU-1 data file by the common file name of `[NAME].msu` and by the alternative file name of `msu1.data.rom`. However, detection of the common file name does not work as of Ares v147. A workaround is to rename the data file to the alternative file name of `msu1.data.rom` This appears to have been fixed in the latest nightly build as of writing.
+Ares is supposed to be able to detect the MSU-1 data file by the common file name of `[NAME].msu` and by the alternative file name of `msu1.data.rom`. However, detection of the common file name does not work as of Ares v147. A workaround is to rename the data file to the alternative file name of `msu1.data.rom`. This appears to have been fixed in the latest nightly build as of writing.
   
 # See Also
 
