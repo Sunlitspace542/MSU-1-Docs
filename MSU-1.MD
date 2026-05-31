@@ -124,7 +124,7 @@ Writing to this register only has an effect if the Audio busy bit is clear.
 
 To use audio resume:
 
-If an audio track is playing and ``MSU_CONTROL`` is written to so that only the resume bit is set, the current track number and offset into the current track is saved.
+If an audio track is playing and ``MSU_CONTROL`` is written to so that only the resume bit (bit 3) is set, the current track number and offset into the current track is saved.
 
 To resume the saved track, load its track index into ``MSU_TRACK``. The track will be loaded and the MSU-1 will seek to the saved offset. The control bits can then be set to play or repeat.
 
