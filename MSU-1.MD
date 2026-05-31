@@ -120,7 +120,9 @@ Writing to this register only has an effect if the Audio busy bit is clear.
 
 - **Repeat** - If set, the currently playing track will loop to the loop point set in its PCM/OGG file once the end of the track has been reached. If this bit is set, the corresponding status bit in `MSU_STATUS` (`$2000`) will be set.
 
-- **Resume** - Added in revision 2. To use:
+- **Resume** - Added in revision 2.
+
+To use audio resume:
 
 If an audio track is playing and ``MSU_CONTROL`` is written to so that only the resume bit is set, the current track number and offset into the current track is saved.
 
