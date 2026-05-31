@@ -70,13 +70,13 @@ This register is a bitfield indicating the current chip status.
 
 **Data busy/Audio busy** - these bits indicate when the MSU-1 is busy reading audio/data. Should be set when audio/data is being read, and cleared when finished, but not always (see [Emulator Behavior](#emulator-behavior)). Data busy must be clear to read out data, and audio busy must be clear to change audio tracks. If the corresponding busy flags are set, the audio track will not change and data will not be read.
 
-**Audio repeat** - If `MSU_CONTROL` (`$2007`) was written to with a value that has bit 2 set, this bit will be set.
+- **Audio repeat** - If `MSU_CONTROL` (`$2007`) was written to with a value that has bit 2 set, this bit will be set.
 
-**Audio playing** - If `MSU_CONTROL` (`$2007`) was written to with a value that has bit 1 set, this bit will be set.
+- **Audio playing** - If `MSU_CONTROL` (`$2007`) was written to with a value that has bit 1 set, this bit will be set.
 
-**Track missing** - If the MSU-1 cannot find the track at the set index, this bit will be set. This bit can be used to handle playback errors.
+- **Track missing** - If the MSU-1 cannot find the track at the set index, this bit will be set. This bit can be used to handle playback errors.
 
-**Revision bits** - Reports the chip's revision. Will likely return 2 (010b) if the target platform's (emulator/hardware) implementation of standard is up to date. The only difference between revision 1 and revision 2 is audio resume support. It is possible that some emulators report a revision of 1 (001b) and still support this feature. The bsnes and SNES9x emulators and the SD2SNES/FXPak Pro flashcarts are known to report the correct revision of 2.
+- **Revision bits** - Reports the chip's revision. Will likely return 2 (010b) if the target platform's (emulator/hardware) implementation of standard is up to date. The only difference between revision 1 and revision 2 is audio resume support. It is possible that some emulators report a revision of 1 (001b) and still support this feature. The bsnes and SNES9x emulators and the SD2SNES/FXPak Pro flashcarts are known to report the correct revision of 2.
 
 ## `MSU_READ` / `$2001` - Data Read Port
 
@@ -116,11 +116,11 @@ This register is a bitfield that controls the audio playback state.
 
 Writing to this register only has an effect if the Audio busy bit is clear.
 
-**Play** - If not set, MSU-1 audio is paused. If it is set, MSU-1 audio will start playing and the corresponding status bit in `MSU_STATUS` (`$2000`) will be set.
+- **Play** - If not set, MSU-1 audio is paused. If it is set, MSU-1 audio will start playing and the corresponding status bit in `MSU_STATUS` (`$2000`) will be set.
 
-**Repeat** - If set, the currently playing track will loop to the loop point set in its PCM/OGG file once the end of the track has been reached. If this bit is set, the corresponding status bit in `MSU_STATUS` (`$2000`) will be set.
+- **Repeat** - If set, the currently playing track will loop to the loop point set in its PCM/OGG file once the end of the track has been reached. If this bit is set, the corresponding status bit in `MSU_STATUS` (`$2000`) will be set.
 
-**Resume** - Added in revision 2. To use:
+- **Resume** - Added in revision 2. To use:
 
 If an audio track is playing and ``MSU_CONTROL`` is written to so that only the resume bit is set, the current track number and offset into the current track is saved.
 
