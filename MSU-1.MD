@@ -70,9 +70,9 @@ This register is a bitfield indicating the current chip status.
 
 **Data busy/Audio busy** - these bits indicate when the MSU-1 is busy reading audio/data. Should be set when audio/data is being read, and cleared when finished, but not always (see [Emulator Behavior](#emulator-behavior)). Data busy must be clear to read out data, and audio busy must be clear to change audio tracks. If the corresponding busy flags are set, the audio track will not change and data will not be read.
 
-- **Audio repeat** - If `MSU_CONTROL` (`$2007`) was written to with a value that has bit 2 set, this bit will be set.
+- **Audio repeat** - If `MSU_CONTROL` (`$2007`) was written to with a value that has bit 1 set, this bit will be set.
 
-- **Audio playing** - If `MSU_CONTROL` (`$2007`) was written to with a value that has bit 1 set, this bit will be set.
+- **Audio playing** - If `MSU_CONTROL` (`$2007`) was written to with a value that has bit 0 set, this bit will be set.
 
 - **Track missing** - If the MSU-1 cannot find the track at the set index, this bit will be set. This bit can be used to handle playback errors.
 
@@ -122,9 +122,9 @@ Writing to this register only has an effect if the Audio busy bit is clear.
 
 - **Resume** - If set, mark currently playing track for later resume. (Revision 2+)
 
-To use audio resume:
+**To use audio resume:**
 
-If an audio track is playing and ``MSU_CONTROL`` is written to so that only the resume bit (bit 3) is set, the current track number and offset into the current track is saved.
+If an audio track is playing and ``MSU_CONTROL`` is written to so that only the resume bit (bit 2) is set, the current track number and offset into the current track is saved.
 
 To resume the saved track, load its track index into ``MSU_TRACK``. The track will be loaded and the MSU-1 will seek to the saved offset. The control bits can then be set to play or repeat.
 
