@@ -68,7 +68,7 @@ This register is a bitfield indicating the current chip status.
 | --------- | ---------- | ------------ | ------------- | ------------- | -------- | -------- | -------- |
 | Data busy | Audio busy | Audio repeat | Audio playing | Track missing | Revision | Revision | Revision |
 
-**Data busy/Audio busy** - these bits indicate when the MSU-1 is busy reading audio/data. Should be set when audio/data is being read, and cleared when finished, but not always (see [Emulator Behavior](#emulator-behavior)). Data busy must be clear to read out data, and audio busy must be clear to change audio tracks. If the corresponding busy flags are set, the audio track will not change and data will not be read.
+**Data busy/Audio busy** - these bits indicate when the MSU-1 is busy reading audio/data. Should be set when audio/data is being read, and cleared when finished, but not always (see [Emulator Behavior](#emulator-behavior)). Data busy must be clear to read out data, and audio busy must be clear to change audio tracks. If the corresponding busy bits are set, the audio track will not change and data will not be read.
 
 - **Audio repeat** - If `MSU_CONTROL` (`$2007`) was written to with a value that has bit 1 set, this bit will be set.
 
@@ -344,7 +344,7 @@ The S-DSP flag register mute bit (``$6C`` bit 6) must be cleared so that the exp
 ### Command Priority
 
 Per the MSU-1 specs PDF by Qwertymodo, page 13:  
-> Rapid writes to ``MSU_CONTROL`` and ``MSU_TRACK`` may not be processed in the order they were received. After writing ``$04`` to ``MSU_CONTROL`` to set the RESUME flag, ensure that the PLAY flag (bit 4) in ``MSU_STATUS`` is clear before trying to write a new track number to ``MSU_TRACK``.
+> Rapid writes to ``MSU_CONTROL`` and ``MSU_TRACK`` may not be processed in the order they were received. After writing ``$04`` to ``MSU_CONTROL`` to set the RESUME flag (bit 2), ensure that the PLAY flag (bit 4) in ``MSU_STATUS`` is clear before trying to write a new track number to ``MSU_TRACK``.
 
 ### Audio Noise During Track Change
 
@@ -352,9 +352,9 @@ When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue wher
 
 ## Emulator Behavior
 
-### Audio/Data Busy Flag Behavior
+### Audio/Data Busy Bits Behavior
 
-No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These flags are never updated and are always cleared. To function correctly on hardware, the audio busy flag must be clear before changing the audio track, and the data busy flag must be clear before reading out data. If the corresponding busy flags are set, the audio track will not change and data will not be read.
+No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These bits are never updated and are always cleared. To function correctly on hardware, the audio busy bit must be clear before changing the audio track, and the data busy bits must be clear before reading out data. If the corresponding busy bits are set, the audio track will not change and data will not be read.
 
 ### Ares MSU-1 Detection
 
@@ -431,6 +431,6 @@ Note that a slightly earlier version of the 21fx specification swaps the functio
 ## Revision 2 (2015)
 
 - Added audio resume feature.
-- Added audio resume flag bit to `MSU_CONTROL` register.
+- Added audio resume bit to `MSU_CONTROL` register.
 - Revision bitfield in `MSU_STATUS` changed to 2 (010b).
   
