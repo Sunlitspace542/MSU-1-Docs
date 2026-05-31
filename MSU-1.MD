@@ -223,7 +223,7 @@ Its filesystem is as follows:
 
 ```
 program.rom - The program ROM
-data.msu (or msu1.rom) - The MSU-1 data file
+msu1.rom (or data.msu) - The MSU-1 data file
 track-#.pcm (or track-#.ogg) - Each audio track 0-65535 (if any).
 ```
 
