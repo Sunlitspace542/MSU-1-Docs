@@ -116,11 +116,11 @@ This register is a bitfield that controls the audio playback state.
 
 Writing to this register only has an effect if the Audio busy bit is clear.
 
-- **Play** - If not set, MSU-1 audio is paused. If it is set, MSU-1 audio will start playing and the corresponding status bit in `MSU_STATUS` (`$2000`) will be set.
+- **Play** - If clear, MSU-1 audio is paused. If set, MSU-1 audio will start playing and the corresponding status bit in `MSU_STATUS` (`$2000`) will be set.
 
 - **Repeat** - If set, the currently playing track will loop to the loop point set in its PCM/OGG file once the end of the track has been reached. If this bit is set, the corresponding status bit in `MSU_STATUS` (`$2000`) will be set.
 
-- **Resume** - Added in revision 2.
+- **Resume** - If set, mark currently playing track for later resume. (Revision 2+)
 
 To use audio resume:
 
