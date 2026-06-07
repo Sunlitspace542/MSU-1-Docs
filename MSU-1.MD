@@ -114,7 +114,7 @@ This register is a bitfield that controls the audio playback state.
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ---- |
 | Unused | Unused | Unused | Unused | Unused | Resume | Repeat | Play |
 
-Writing to this register only has an effect if the Audio busy bit is clear.
+Writing to this register only has an effect if the Audio busy and Track missing bits are clear.
 
 - **Play** - If clear, MSU-1 audio is paused. If set, MSU-1 audio will start playing and the corresponding status bit in `MSU_STATUS` (`$2000`) will be set.
 
