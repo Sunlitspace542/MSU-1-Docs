@@ -354,7 +354,7 @@ When switching tracks, some versions of the SD2SNES/FXPak Pro have an issue wher
 
 ### Audio/Data Busy Bits Behavior
 
-No emulator is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These bits are never updated and are always cleared. To function correctly on hardware, the audio busy bit must be clear before changing the audio track, and the data busy bits must be clear before reading out data. If the corresponding busy bits are set, the audio track will not change and data will not be read.
+No emulator (with the exception of [ZSNES 2](https://github.com/xyproto/zsnes)) is known to correctly emulate the audio/data busy status bits in `MSU_STATUS`. These bits are never updated and are always cleared. To function correctly on hardware, the audio busy bit must be clear before changing the audio track, and the data busy bits must be clear before reading out data. If the corresponding busy bits are set, the audio track will not change and data will not be read.
 
 ### Ares MSU-1 Detection
 
