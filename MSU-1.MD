@@ -156,7 +156,7 @@ manifest.bml - Not required(?), Higan's ROM importer will generate one of these 
 program.rom - program ROM
 msu1/
 	data.rom - MSU-1 data file
-	track-#.pcm - Each audio track 0-655535 (if any).
+	track-#.pcm - Each audio track 0-65535 (if any).
 ```
 
 ## MSU-1 File Formats
